@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { getReq, deleteReq } from '../api/customAxios'
-import Table from 'react-bootstrap/Table'
-import { Redirect } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
-const DataTable = (props) => {
+const DataTable = () => {
   const [data, setData] = useState([]);
   
+  /* Remove entry */
   const handleRemove = (id) => {
     console.log(id)
     deleteReq('expense/' + id)
@@ -20,11 +19,11 @@ const DataTable = (props) => {
     })
   }
 
-
-
+  /* Get user's expenses on load */
   useEffect(() => {
     getReq('expense')
     .then(res => {
+      console.log(res)
       setData(res.data)
     })
     .catch(err => {
@@ -35,8 +34,7 @@ const DataTable = (props) => {
 
   return (
         <>
-
-            {data.map(entry => {
+            {!data || data.map(entry => {
                 const {id, name, cost, category} = entry;
                 return (
                   <Card key={id} className="mt-3 mb-3" border="success" style={{ width: '26%' }}>
@@ -54,29 +52,6 @@ const DataTable = (props) => {
                 )
               })}
 
-
-          {/* <Table bordered hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Cost</th>
-                <th>Category</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map(entry => {
-                const {id, name, cost, category} = entry;
-                return (
-                  <tr key={id}>
-                      <td>{name}</td>
-                      <td>{cost}</td>
-                      <td>{category}</td>
-                  </tr>
-                )
-              })}
-
-            </tbody>
-          </Table> */}
         </>
     )
 }

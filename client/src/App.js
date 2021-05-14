@@ -1,4 +1,4 @@
-import './App.css';
+
 import Login from './pages/Login'
 import Register from './pages/Register'
 import DataTable from './components/DataTable'
@@ -13,22 +13,15 @@ function App() {
   const [user, setUser] = useState(true);
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
-  const handleLogout = e => {
-    e.preventDefault();
-    setUser(false);
-  }
   return (
     <div className="App">
       <Router>
       <AuthContext.Provider value={value}>
         <Switch>
-          {/* <Route path="/" exact component={DashBoard}/> */}
-          
-            <ProtectedRoute exact path='/' handleLogout={handleLogout} component={DashBoard} user={user} />
+            <ProtectedRoute exact path='/'  component={DashBoard} user={user} />
             <Route path="/login" exact component={Login}/>
             <Route path="/register" exact component={Register}/>
             <Route path="*" component={Error}/>
-          
         </Switch>
         </AuthContext.Provider>
       </Router>

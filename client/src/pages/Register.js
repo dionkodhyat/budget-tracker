@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Modal from 'react-bootstrap/modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-
+import { Redirect, Link } from "react-router-dom";
+import { AuthContext } from '../context/AuthContext'
 
 const axios = require('axios')
 
@@ -10,6 +11,7 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('')
     const [password, setPassword] = useState('');
+    const { user, setUser } = useContext(AuthContext);
     const handleSubmit = (e) => {
         e.preventDefault();
         const user = {email : email, name : name, password : password};
@@ -18,6 +20,9 @@ const Register = () => {
             console.log(res);
         })
     }
+
+    if (user === true) 
+        return (<Redirect to='/'/>);
 
     return (
         <div>
@@ -40,7 +45,7 @@ const Register = () => {
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                    <a>Already have an account?</a>
+                    <Link to="/login">Already have an account?</Link>
                     <Button type="submit" variant="success">Register</Button>
                 </Modal.Footer>
             </Form>

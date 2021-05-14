@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { useHistory } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import Modal from 'react-bootstrap/modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -12,7 +12,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { user, setUser } = useContext(AuthContext);
-    // let history = useHistory();
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,14 +20,14 @@ const Login = () => {
         .then(res => {
             sessionStorage.setItem("accessToken", res.data.accessToken);
             setUser(true);
-            console.log({user})
-            // history.push("/");
         })
         .catch(err => {
             alert(err)
         })
-        
     }
+
+    if (user === true) 
+        return (<Redirect to='/'/>);
 
     return (
         <div>
@@ -37,18 +37,18 @@ const Login = () => {
             
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <Form.Control required type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <Form.Control required type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </Form.Group>
                 
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary">Close</Button>
+                <Link to="/register">Register</Link>
                 <Button type="submit" variant="success">Login</Button>
             </Modal.Footer>
             </Form>

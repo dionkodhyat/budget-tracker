@@ -36,23 +36,20 @@ const login = (req, res) => {
     const { email, password } = req.body;
     pool.query(SQL `SELECT * FROM users WHERE email = ${email}`, (err, queryResults) => {
         if (err) return res.send('Error w/ query');
-        if (queryResults.rows.length === 0) return res.send('No user found');
+        if (queryResults.rows.length === 0) return res.status(404).send('No user found');
         const hashedPassword = queryResults.rows[0].password;
         bcrypt.compare(password, hashedPassword, (err, match) => {
             if (err) res.send('Server Error, try again');
             if (match) {
                 const token = createToken(queryResults.rows[0]);
-                console.log({token})
-                // res.cookie("access-token", token, {
-                //     maxAge: 60 * 60 * 1000,
-                //     httpOnly : true
-                // })
                 return res.status(200).json({'accessToken' : token});
             }
             return res.status(400).send('WRONG PASSWORD');
         })
     })
 }
+
+
 
 const createExpense = (req, res) => {
     const { userID, name, cost, category } = req.body;
