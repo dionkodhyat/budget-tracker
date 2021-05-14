@@ -18,8 +18,10 @@ const Login = () => {
         e.preventDefault();
         axios.post(URL, { email, password })
         .then(res => {
-            sessionStorage.setItem("accessToken", res.data.accessToken);
-            setUser(true);
+            if (res.status === 200) {
+                sessionStorage.setItem("accessToken", res.data.accessToken);
+                setUser(true);
+            }
         })
         .catch(err => {
             alert(err)
