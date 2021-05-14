@@ -4,15 +4,13 @@ import { AuthContext } from '../context/AuthContext'
 
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <Route {...rest} render={
       props => {
-        if (user) {
-          console.log({user})
+        if (sessionStorage.getItem("accessToken")) {
           return <Component {...rest} {...props} />
         } else {
-          console.log({user})
           return <Redirect to={
             {
               pathname: '/login',

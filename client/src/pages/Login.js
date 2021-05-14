@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { Redirect, Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from 'react'
+import { Link, useHistory } from "react-router-dom";
 import Modal from 'react-bootstrap/modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -12,24 +12,29 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { user, setUser } = useContext(AuthContext);
-
+    let history = useHistory()
 
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post(URL, { email, password })
         .then(res => {
             if (res.status === 200) {
-                sessionStorage.setItem("accessToken", res.data.accessToken);
-                setUser(true);
+                sessionStorage.setItem("accessToken", res.data.accessToken)
+                setEmail('');
+                setPassword('')
+                history.push('/')
             }
         })
         .catch(err => {
-            alert(err)
+            console.log({err})
         })
     }
 
-    if (user === true) 
-        return (<Redirect to='/'/>);
+    useEffect(() => {
+        if(sessionStorage.getItem("accessToken"))
+            history.push('/')
+    })
+
 
     return (
         <div>

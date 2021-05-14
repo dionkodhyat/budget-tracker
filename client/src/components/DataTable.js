@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { getReq, deleteReq } from '../api/customAxios'
-import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 
@@ -13,7 +12,7 @@ const DataTable = (props) => {
     console.log(id)
     deleteReq('expense/' + id)
     .then(res => {
-      const newData = data.filter(entry => entry.id != id);
+      const newData = data.filter(entry => entry.id !== id);
       setData([...newData]);
     })
     .catch(err => {
@@ -37,8 +36,6 @@ const DataTable = (props) => {
 
   return (
         <>
-          
-
           <Table hover>
             <thead>
               <tr>
@@ -58,7 +55,6 @@ const DataTable = (props) => {
                     <td>{category}</td>
                     <td><Button key={id} variant='outline-danger' size="sm" onClick={() => handleRemove(id)}>Remove</Button></td>
                   </tr>
-
                 )
               })}
 

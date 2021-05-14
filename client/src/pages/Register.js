@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Modal from 'react-bootstrap/modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { Redirect, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext'
 
 const axios = require('axios')
@@ -11,18 +11,27 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('')
     const [password, setPassword] = useState('');
-    const { user, setUser } = useContext(AuthContext);
+    let history = useHistory();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const obj = {email : email, name : name, password : password};
         axios.post(URL, obj)
         .then(res => {
-            console.log(res);
+            history.push('/login')
+        })
+        .catch(err => {
+            alert('USERNAME IS TAKEN')
         })
     }
 
-    if (user === true) 
-        return (<Redirect to='/'/>);
+    useEffect(() => {
+        if(sessionStorage.getItem("accessToken"))
+            history.push('/')
+    })
+
+
+
 
     return (
         <div>

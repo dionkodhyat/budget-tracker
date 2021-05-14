@@ -3,14 +3,17 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Button from 'react-bootstrap/Button'
 import { AuthContext } from '../context/AuthContext'
+import { useHistory } from 'react-router-dom'
+
 
 const Navigation = () => {
     const { setUser } = useContext(AuthContext);
+    let history = useHistory();
     
     /* Sign out by removing token and authorization */
     const handleSignout = () => {
         sessionStorage.removeItem("accessToken");
-        setUser(false);
+        history.push('/login')
     }
 
     return (
