@@ -3,7 +3,6 @@ import DataForm from '../components/DataForm'
 import Button from 'react-bootstrap/Button'
 import DataTable from '../components/DataTable';
 import Navigation from '../components/Navigation'
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -11,8 +10,7 @@ import Col from 'react-bootstrap/Col'
 
 const Dashboard = () => {
     const [modalShow, setModalShow] = useState(false);
-    useEffect(() => {
-    }, [modalShow]);
+
     return (
         <>
           <Navigation/>

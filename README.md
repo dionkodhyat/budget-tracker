@@ -8,7 +8,12 @@ Created an expense tracker app where user are able to view, submit and delete th
 
 `cd client`
 
+`npm i`
+
 `npm start`
+
+username : test@mail.com
+password : password
 
 ## Technology Stack Used:
 

@@ -9,7 +9,7 @@ import React, {useState, useMemo} from 'react'
 import { AuthContext } from './context/AuthContext'
 
 function App() {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
 
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-      <AuthContext.Provider value={value}>
+      <AuthContext.Provider value={{value}}>
         <Switch>
             <ProtectedRoute exact path='/'  component={DashBoard} />
             <Route path="/login" exact component={Login}/>
