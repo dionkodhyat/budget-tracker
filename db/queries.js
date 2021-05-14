@@ -91,15 +91,28 @@ const createExpense = async (req, res) => {
     }
 }
 
-const deleteExpense = (req, res) => {
+// const deleteExpense = (req, res) => {
+//     const { id } = req.params;
+//     console.log(id)
+//     pool.query(SQL `DELETE FROM expenses 
+//                     WHERE id = ${id}`, (err, queryResults) => {
+//                         if (err) res.sendStatus(404);
+//                         else res.sendStatus(200);
+//                     })
+// }
+
+const deleteExpense = async (req, res) => {
     const { id } = req.params;
-    console.log(id)
-    pool.query(SQL `DELETE FROM expenses 
-                    WHERE id = ${id}`, (err, queryResults) => {
-                        if (err) res.sendStatus(404);
-                        else res.sendStatus(200);
-                    })
+    try {
+        const results = await pool.query(SQL `DELETE FROM expenses 
+                              WHERE id = ${id}`);
+        res.status(200).json(results);
+    } catch(err) {
+        res.sendStatus(400);
+    }
+
 }
+
 
 const getExpenses = (req, res) => {
     const { userID } = req.body;
@@ -109,6 +122,9 @@ const getExpenses = (req, res) => {
                         else res.status(200).send(queryResults.rows);
                     })
 }
+
+
+
 
 module.exports = {
     registerUser,

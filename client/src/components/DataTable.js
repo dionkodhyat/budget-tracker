@@ -23,7 +23,6 @@ const DataTable = () => {
   useEffect(() => {
     getReq('expense')
     .then(res => {
-      console.log(res)
       setData(res.data)
     })
     .catch(err => {
@@ -32,21 +31,23 @@ const DataTable = () => {
 
   }, [])
 
+
+
   return (
         <>
-            {!data || data.map(entry => {
+            {data && data.map(entry => {
                 const {id, name, cost, category} = entry;
                 return (
                   <Card key={id} className="mt-3 mb-3" border="success" style={{ width: '26%' }}>
-                  <Card.Body>
-                    <Card.Title>{name}</Card.Title>
-                    <Card.Text>
+                  <Card.Body key={id}>
+                    <Card.Title key={id}>{name}</Card.Title>
+                    <Card.Text key={id}>
                       {`Cost : ${cost}`} 
                       <br></br> 
                       {`Category : ${category}`} 
                       <br></br>
-                    </Card.Text>
-                    <Button variant='outline-danger' size="sm" onClick={() => handleRemove(id)}>Remove</Button>
+                    </Card.Text >
+                    <Button key={id} variant='outline-danger' size="sm" onClick={() => handleRemove(id)}>Remove</Button>
                   </Card.Body>
                 </Card>
                 )
