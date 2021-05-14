@@ -5,13 +5,9 @@ const { validateToken } = require('./db/jwt');
 const db = require('./db/queries')
 
 const app = express();
+const PORT = process.env.PORT || 3001
 
 /* Middleware */
-// app.use(cors( {
-//   origin: ["http://localhost:3000"],
-//   methods : ['GET', 'POST'],
-//   credentials: true // allow the cookie to be enabled
-// }));
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded())
@@ -34,5 +30,5 @@ app.delete('/expense/:id', validateToken, db.deleteExpense)
 
 
 app.listen(3001, (req, res) => {
-  console.log('LISTENING TO PORT 3000')
+  console.log('LISTENING TO PORT 3001')
 })

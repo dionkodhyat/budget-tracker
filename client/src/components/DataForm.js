@@ -9,7 +9,7 @@ const DataForm = (props) => {
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [category, setCategory] = useState('Restaurant');
-    const [isValid, setValid] = useState(false)
+    const [isValid, setValid] = useState(false);
     const categories = ['Restaurant', 'Gas', 'Mortgage', 'Grocery', 'Leisure', 'Travel', 'Debt', "Misc"];
 
 
@@ -23,6 +23,8 @@ const DataForm = (props) => {
             setValid(true);
         }
     }
+
+    /* Function to submit entry */
     const handleSubmit =  async (e) => {
         e.preventDefault()
         try {
@@ -38,7 +40,7 @@ const DataForm = (props) => {
         <>
         <Modal
             {...props}
-            size="sm"
+            size="md"
             aria-labelledby="contained-modal-title-vcenter"
             centered
             >
@@ -79,8 +81,8 @@ const DataForm = (props) => {
                         Submit
                     </Button>
                     </Modal.Footer>
-                 
-           
+
+
                 </Form>
             </Modal.Body>
         </Modal>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DataForm from '../components/DataForm'
 import Button from 'react-bootstrap/Button'
 import DataTable from '../components/DataTable';
@@ -10,25 +10,29 @@ import Col from 'react-bootstrap/Col'
 
 
 const Dashboard = () => {
-    const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow, setModalShow] = useState(false);
+    useEffect(() => {
+    }, [modalShow]);
     return (
         <>
-          <Navigation></Navigation>
-          <Container>
-          <Row>
-              <Col>
-          <Button variant="warning" onClick={() => setModalShow(true)}>
-            Insert expense
-          </Button>
-    
-          <DataForm
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
-          <DataTable/>
-          </Col>
-          </Row>
-          </Container>
+          <Navigation/>
+            <Container>
+              <Row>
+                <Col>
+              <Button className="mt-3 mb-3" 
+                      variant="warning" 
+                      onClick={() => setModalShow(true)}>
+                Insert expense
+              </Button>
+        
+              <DataForm
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              />
+              <DataTable/>
+                </Col>
+              </Row>
+            </Container>
         </>
     )
 }

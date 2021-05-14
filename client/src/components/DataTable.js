@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { getReq, deleteReq } from '../api/customAxios'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table'
 
-const DataTable = () => {
+
+const DataTable = (props) => {
   const [data, setData] = useState([]);
   
   /* Remove entry */
@@ -35,23 +37,35 @@ const DataTable = () => {
 
   return (
         <>
-            {data && data.map(entry => {
+          
+
+          <Table hover>
+            <thead>
+              <tr>
+                <th>Expense</th>
+                <th>Cost</th>
+                <th>Category</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data && data.map(entry => {
                 const {id, name, cost, category} = entry;
                 return (
-                  <Card key={id} className="mt-3 mb-3" border="success" style={{ width: '26%' }}>
-                  <Card.Body key={id}>
-                    <Card.Title key={id}>{name}</Card.Title>
-                    <Card.Text key={id}>
-                      {`Cost : ${cost}`} 
-                      <br></br> 
-                      {`Category : ${category}`} 
-                      <br></br>
-                    </Card.Text >
-                    <Button key={id} variant='outline-danger' size="sm" onClick={() => handleRemove(id)}>Remove</Button>
-                  </Card.Body>
-                </Card>
+                  <tr key={id}>
+                    <td>{name}</td>
+                    <td>{cost}</td>
+                    <td>{category}</td>
+                    <td><Button key={id} variant='outline-danger' size="sm" onClick={() => handleRemove(id)}>Remove</Button></td>
+                  </tr>
+
                 )
               })}
+
+            </tbody>
+          </Table>
+
+
 
         </>
     )
