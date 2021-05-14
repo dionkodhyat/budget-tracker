@@ -7,11 +7,12 @@ const db = require('./db/queries')
 const app = express();
 
 /* Middleware */
-app.use(cors( {
-  origin: ["http://localhost:3000"],
-  methods : ['GET', 'POST'],
-  credentials: true // allow the cookie to be enabled
-}));
+// app.use(cors( {
+//   origin: ["http://localhost:3000"],
+//   methods : ['GET', 'POST'],
+//   credentials: true // allow the cookie to be enabled
+// }));
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cookieParser())
@@ -32,6 +33,6 @@ app.delete('/expense', validateToken, db.deleteExpense)
 
 
 
-app.listen(3000, (req, res) => {
+app.listen(3001, (req, res) => {
   console.log('LISTENING TO PORT 3000')
 })

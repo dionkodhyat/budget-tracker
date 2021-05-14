@@ -7,6 +7,7 @@ const createToken = user => {
 
 const validateToken = (req, res, next) => {
     const token = req.cookies["access-token"];
+    console.log(token);
     if (!token) return res.sendStatus(401);
 
     try {

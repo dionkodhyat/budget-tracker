@@ -18,7 +18,7 @@ const checkUser = (req, res, next) => {
 }
 
 const registerUser = (req, res) => {
-    if (req.body.data !== null) return res.send('User with that email already exist');
+    if (req.body.data.length > 0) return res.status(404).send({message : 'User with that email already exist'});
     const { name, email, password } = req.body;
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
         if (err) res.send('Error w/ password hash function');
@@ -42,6 +42,7 @@ const login = (req, res) => {
                 if (err) res.send('Server Error, try again');
                 if (match) {
                     const token = createToken(queryResults.rows[0]);
+                    console.log({token})
                     res.cookie("access-token", token, {
                         maxAge: 60 * 60,
                         httpOnly : true
