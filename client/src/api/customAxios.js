@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = "http://localhost:3001/"
+const URL = "https://dion-renaissance-app.herokuapp.com/"
 
 const getAxiosInstance = () => {
     const accessToken = sessionStorage.getItem("accessToken");

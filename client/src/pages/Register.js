@@ -6,7 +6,7 @@ import { Redirect, Link } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext'
 
 const axios = require('axios')
-
+const URL = 'https://dion-renaissance-app.herokuapp.com/register'
 const Register = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('')
@@ -14,8 +14,8 @@ const Register = () => {
     const { user, setUser } = useContext(AuthContext);
     const handleSubmit = (e) => {
         e.preventDefault();
-        const user = {email : email, name : name, password : password};
-        axios.post('http://localhost:3001/register', user)
+        const obj = {email : email, name : name, password : password};
+        axios.post(URL, obj)
         .then(res => {
             console.log(res);
         })

@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 import { AuthContext } from '../context/AuthContext'
 
 const axios = require('axios')
-const URL = 'http://localhost:3001/login'
+const URL = 'https://dion-renaissance-app.herokuapp.com/login'
 
 const Login = () => {
     const [email, setEmail] = useState('');

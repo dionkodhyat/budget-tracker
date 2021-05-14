@@ -1,7 +1,6 @@
 
 import Login from './pages/Login'
 import Register from './pages/Register'
-import DataTable from './components/DataTable'
 import DashBoard from './pages/Dashboard'
 import Error from './pages/Error'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
@@ -10,15 +9,17 @@ import React, {useState, useMemo} from 'react'
 import { AuthContext } from './context/AuthContext'
 
 function App() {
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+
+
 
   return (
     <div className="App">
       <Router>
       <AuthContext.Provider value={value}>
         <Switch>
-            <ProtectedRoute exact path='/'  component={DashBoard} user={user} />
+            <ProtectedRoute exact path='/'  component={DashBoard} />
             <Route path="/login" exact component={Login}/>
             <Route path="/register" exact component={Register}/>
             <Route path="*" component={Error}/>

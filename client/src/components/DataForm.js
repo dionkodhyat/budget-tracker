@@ -31,6 +31,7 @@ const DataForm = (props) => {
             const res = await postReq('expense', {name, cost, category});
             setName('');
             setCost('');
+            window.location = "/"
         } catch (err) {
             alert(err)
         }

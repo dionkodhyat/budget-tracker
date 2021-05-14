@@ -32,23 +32,6 @@ const registerUser = (req, res) => {
 
 
 
-// const login = (req, res) => {
-//     const { email, password } = req.body;
-//     pool.query(SQL `SELECT * FROM users WHERE email = ${email}`, (err, queryResults) => {
-//         if (err) return res.send('Error w/ query');
-//         if (queryResults.rows.length === 0) return res.status(404).send('No user found');
-//         const hashedPassword = queryResults.rows[0].password;
-//         bcrypt.compare(password, hashedPassword, (err, match) => {
-//             if (err) res.send('Server Error, try again');
-//             if (match) {
-//                 const token = createToken(queryResults.rows[0]);
-//                 return res.status(200).json({'accessToken' : token});
-//             }
-//             return res.status(400).send('WRONG PASSWORD');
-//         })
-//     })
-// }
-
 const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -69,16 +52,6 @@ const login = async (req, res) => {
 
 
 
-// const createExpense = (req, res) => {
-//     const { userID, name, cost, category } = req.body;
-//     console.log({userID, name, cost, category});
-//     pool.query(SQL `INSERT INTO expenses (user_id, name, cost, category)
-//                     VALUES (${userID}, ${name}, ${cost}, ${category})`, (err, queryResults) => {
-//                         if (err) res.sendStatus(404);
-//                         else res.sendStatus(200);
-//                     })
-// }
-
 const createExpense = async (req, res) => {
     const { userID, name, cost, category } = req.body;
     try {
@@ -91,15 +64,7 @@ const createExpense = async (req, res) => {
     }
 }
 
-// const deleteExpense = (req, res) => {
-//     const { id } = req.params;
-//     console.log(id)
-//     pool.query(SQL `DELETE FROM expenses 
-//                     WHERE id = ${id}`, (err, queryResults) => {
-//                         if (err) res.sendStatus(404);
-//                         else res.sendStatus(200);
-//                     })
-// }
+
 
 const deleteExpense = async (req, res) => {
     const { id } = req.params;
