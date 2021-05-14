@@ -35,29 +35,28 @@ const registerUser = (req, res) => {
 const login = (req, res) => {
     const { email, password } = req.body;
     pool.query(SQL `SELECT * FROM users WHERE email = ${email}`, (err, queryResults) => {
-        if (err) res.send('Error w/ query');
-        if (queryResults.rows.length > 0) {
-            const hashedPassword = queryResults.rows[0].password;
-            bcrypt.compare(password, hashedPassword, (err, match) => {
-                if (err) res.send('Server Error, try again');
-                if (match) {
-                    const token = createToken(queryResults.rows[0]);
-                    console.log({token})
-                    res.cookie("access-token", token, {
-                        maxAge: 60 * 60,
-                        httpOnly : true
-                    })
-                    res.json()
-                }
-                else res.send('WRONG PASSWORD');
-            })
-        }
-        else res.send('No user found')
+        if (err) return res.send('Error w/ query');
+        if (queryResults.rows.length === 0) return res.send('No user found');
+        const hashedPassword = queryResults.rows[0].password;
+        bcrypt.compare(password, hashedPassword, (err, match) => {
+            if (err) res.send('Server Error, try again');
+            if (match) {
+                const token = createToken(queryResults.rows[0]);
+                console.log({token})
+                // res.cookie("access-token", token, {
+                //     maxAge: 60 * 60 * 1000,
+                //     httpOnly : true
+                // })
+                return res.status(200).json({'accessToken' : token});
+            }
+            return res.status(400).send('WRONG PASSWORD');
+        })
     })
 }
 
 const createExpense = (req, res) => {
     const { userID, name, cost, category } = req.body;
+    console.log({userID, name, cost, category});
     pool.query(SQL `INSERT INTO expenses (user_id, name, cost, category)
                     VALUES (${userID}, ${name}, ${cost}, ${category})`, (err, queryResults) => {
                         if (err) res.sendStatus(404);
@@ -66,9 +65,10 @@ const createExpense = (req, res) => {
 }
 
 const deleteExpense = (req, res) => {
-    const { userID, id } = req.body;
+    const { id } = req.params;
+    console.log(id)
     pool.query(SQL `DELETE FROM expenses 
-                    WHERE user_id = ${userID} AND id = ${id}`, (err, queryResults) => {
+                    WHERE id = ${id}`, (err, queryResults) => {
                         if (err) res.sendStatus(404);
                         else res.sendStatus(200);
                     })
@@ -76,12 +76,10 @@ const deleteExpense = (req, res) => {
 
 const getExpenses = (req, res) => {
     const { userID } = req.body;
-    console.log(`User id : ${userID}`)
     pool.query(SQL `SELECT * FROM expenses 
                     WHERE user_id = ${userID}`, (err, queryResults) => {
-                        console.log(queryResults.rows)
                         if (err) res.sendStatus(404);
-                        else res.status(200).send(queryResults);
+                        else res.status(200).send(queryResults.rows);
                     })
 }
 

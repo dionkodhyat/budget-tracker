@@ -29,7 +29,7 @@ app.post('/expense', validateToken, db.createExpense);
 app.post('/register', db.checkUser, db.registerUser);
 app.post('/login', db.login);
 app.get('/expense', validateToken, db.getExpenses);
-app.delete('/expense', validateToken, db.deleteExpense)
+app.delete('/expense/:id', validateToken, db.deleteExpense)
 
 
 

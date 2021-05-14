@@ -16,6 +16,7 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
+    "react-router-dom": "^5.2.0",
     "sql-template-strings": "^2.2.2"
   }
 }
